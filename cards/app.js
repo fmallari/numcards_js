@@ -14,25 +14,25 @@ $.getJSON(`${baseURL}/new/draw/`)
         firstCard = data.cards[0];
         let deckId = data.deck_id;
         return $.getJSON(`${baseURL}/${deckId}/draw/`);
-    })
-    .then(data => {
-        let secondCard = data.cards[0];
-        [firstCard, secondCard].forEach(function(card) {
-            console.log(`${card.value.toLowerCase()} of ${card.suit.toLowerCase()}`);
+        })
+        .then(data => {
+            let secondCard = data.cards[0];
+            [firstCard, secondCard].forEach(function(card) {
+                console.log(
+                `${card.value.toLowerCase()} of ${card.suit.toLowerCase()}`
+                );
         });
     });
-
-});
 
 //3
 let deckId = null;
 let $btn = $('button');
 let $cardArea = $('#card-area');
 
-$.getJSON(`${baseURL}/new/shuffle`).then(data => {
-    deckId = data.deck_id;
-    $btn.show();
-});
+    $.getJSON(`${baseURL}/new/shuffle`).then(data => {
+        deckId = data.deck_id;
+        $btn.show();
+    });
 
 $btn.on('click', function() {
     $.getJSON(`${baseURL}/${deckId}/draw`).then(data => {
@@ -45,9 +45,10 @@ $btn.on('click', function() {
                 src: cardSrc,
                 css: {
                     transform: `translate(${randomX}px, ${randomY}px) rotate(${angle}deg)`
-                }
-            })
-        );
-        if(data.remaining === 0) $btn.remove();
+                    }
+                })
+            );
+            if(data.remaining === 0) $btn.remove();
+        });
     });
 });
